@@ -1,7 +1,6 @@
 import { sleep } from "bun";
 import { chromium, type Locator, type Page } from "playwright";
 
-console.log(Bun.env, process.env);
 const { EMAIL, PASSWORD, LOGIN_URL } = Bun.env;
 const CLASS_TO_ASSIGN = Bun.argv[2];
 
