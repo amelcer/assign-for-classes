@@ -15,11 +15,25 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
 
-      - name: Install dependencies
-        run: bun install
+      - name: Prepare Playwright env
+        run: |
+          bun install
+          PLAYWRIGHT_VERSION=1.49.1
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
 
-      - name: Install playwright
-        run: npx playwright install chromium --with-deps
+      - name: Cache Playwright browser binaries
+        id: playwright-cache
+        uses: actions/cache@v3
+        with:
+          path: "~/.cache/ms-playwright"
+          key: "${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}"
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browser binaries & OS dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: |
+          npx playwright install chromium --with-deps
 
       - name: Assign for classes
         run: bun index.ts "Obwodowy"
