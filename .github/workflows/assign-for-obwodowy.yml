@@ -1,0 +1,19 @@
+name: assign-for-obwodowy
+on:
+  schedule:
+    - cron: "0 18 * * 5" # should run every friday at 19 GMT+1
+
+jobs:
+  obwodowy:
+    name: obwodowy
+    runs-on: ubuntu-latest
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      LOGIN_URL: ${{ secrets.LOGIN_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+      - run: bun index.ts "Obwodowy"

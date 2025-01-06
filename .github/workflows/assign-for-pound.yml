@@ -1,0 +1,19 @@
+name: assign-for-pound
+on:
+  schedule:
+    - cron: "0 19 * * 5,2" # should run every friday and wednesday at 20 GMT+1
+
+jobs:
+  pound:
+    name: pound
+    runs-on: ubuntu-latest
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      LOGIN_URL: ${{ secrets.LOGIN_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+      - run: bun index.ts "Pound"

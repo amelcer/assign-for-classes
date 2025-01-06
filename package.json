@@ -1,0 +1,14 @@
+{
+  "name": "classes-reservation",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.49.1"
+  }
+}
