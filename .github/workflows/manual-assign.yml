@@ -1,0 +1,26 @@
+name: manual-assign
+on:
+  workflow_dispatch:
+    inputs:
+      className:
+        description: "Class name"
+        required: true
+        default: "obwodowy"
+        type: choice
+        options:
+          - Obwodowy
+          - Pound
+jobs:
+  assign_for_class:
+    name: assign_for_class
+    runs-on: ubuntu-latest
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      LOGIN_URL: ${{ secrets.LOGIN_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+      - run: bun index.ts "${{ inputs.className }}"
